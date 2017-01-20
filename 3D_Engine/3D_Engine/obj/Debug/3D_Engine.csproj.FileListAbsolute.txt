@@ -1,0 +1,9 @@
+c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\bin\Debug\3D_Engine.exe.config
+c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\bin\Debug\3D_Engine.exe
+c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\bin\Debug\3D_Engine.pdb
+c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Debug\3D_Engine.csprojResolveAssemblyReference.cache
+c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Debug\_3D_Engine.Properties.Resources.resources
+c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Debug\3D_Engine.csproj.GenerateResource.Cache
+c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Debug\3D_Engine.exe
+c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Debug\3D_Engine.pdb
+c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Debug\_3D_Engine.Form1.resources
