@@ -51,8 +51,36 @@ namespace _3D_Engine
             return point;
         }
 
+        
+        public static float cos(float angle){
+            return (float)Math.Cos(angle * (Math.PI / 180f));
+        }
+        
+        public static float sin(float angle){
+            return (float)Math.Sin(angle * (Math.PI / 180f));
+        }
+        
         public static Vector3 applyRotationToPoint(Vector3 localPosition, Vector3 rotation)
         {
+            // Commented section o be tested!
+            /*float x = rotation.x;
+            float y = rotation.x;
+            float z = rotation.x;
+            Matrix rotationMatrix = new Matrix();
+            rotationMatrix.matrix = new float[][]{
+                new float[]{ cos(y) * cos(z), (cos(z) * sin(x) * sin(y)) - (cos(x) * sin(z)), (cos(x) * cos(z) * sin(y)) + (sin(x) * sin(y)), 0 },
+                new float[]{ cos(y) * cos(z), (cos(x) * cos(z)) + (sin(x) * sin(y) * sin(z)), -(cos(z) * sin(x)) + (cos(x) * sin(y) * sin(z)), 0 },
+                new float[]{ -sin(y), (cos(y) * sin(x)), (cos(x) * cos(y)), 0 },
+                new float[]{ 0, 0, 0, 1 }
+            };
+            
+            rotationMatrix.input = new float[] { localPosition.x, localPosition.y, localPosition.z, 1f };
+            
+            // BIIIGGG matrix does a full rotation.
+            
+            float[] matrixOut = rotationMatrix.output;
+            return new Vector3(matrixOut[0], matrixOut[1], matrixOut[2]);*/
+            
             Matrix rotationMatrix = new Matrix();
             float angle = rotation.x;
             float[] ma = { 1f, 0f, 0f, 0f };
