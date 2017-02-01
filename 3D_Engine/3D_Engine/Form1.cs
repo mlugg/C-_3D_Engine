@@ -36,11 +36,12 @@ namespace _3D_Engine
                 try
                 {
                     this.CreateGraphics().Clear(Color.White);
-                }catch(Exception e)
+                    this.InvokePaint(this, new PaintEventArgs(this.CreateGraphics(), new Rectangle()));
+                }
+                catch(Exception e)
                 {
                     t.Abort();
                 }
-                this.InvokePaint(this, new PaintEventArgs(this.CreateGraphics(), new Rectangle()));
             }
         }
 

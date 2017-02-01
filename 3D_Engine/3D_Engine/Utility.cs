@@ -62,14 +62,13 @@ namespace _3D_Engine
         
         public static Vector3 applyRotationToPoint(Vector3 localPosition, Vector3 rotation)
         {
-            // Commented section o be tested!
-            /*float x = rotation.x;
-            float y = rotation.x;
-            float z = rotation.x;
+            float x = rotation.x;
+            float y = rotation.y;
+            float z = rotation.z;
             Matrix rotationMatrix = new Matrix();
             rotationMatrix.matrix = new float[][]{
                 new float[]{ cos(y) * cos(z), (cos(z) * sin(x) * sin(y)) - (cos(x) * sin(z)), (cos(x) * cos(z) * sin(y)) + (sin(x) * sin(y)), 0 },
-                new float[]{ cos(y) * cos(z), (cos(x) * cos(z)) + (sin(x) * sin(y) * sin(z)), -(cos(z) * sin(x)) + (cos(x) * sin(y) * sin(z)), 0 },
+                new float[]{ cos(y) * sin(z), (cos(x) * cos(z)) + (sin(x) * sin(y) * sin(z)), -(cos(z) * sin(x)) + (cos(x) * sin(y) * sin(z)), 0 },
                 new float[]{ -sin(y), (cos(y) * sin(x)), (cos(x) * cos(y)), 0 },
                 new float[]{ 0, 0, 0, 1 }
             };
@@ -79,61 +78,7 @@ namespace _3D_Engine
             // BIIIGGG matrix does a full rotation.
             
             float[] matrixOut = rotationMatrix.output;
-            return new Vector3(matrixOut[0], matrixOut[1], matrixOut[2]);*/
-            
-            Matrix rotationMatrix = new Matrix();
-            float angle = rotation.x;
-            float[] ma = { 1f, 0f, 0f, 0f };
-            float[] mb = { 0f, (float)Math.Cos(angle * (Math.PI / 180.0)), (float)-Math.Sin(angle * (Math.PI / 180.0)), 0f };
-            float[] mc = { 0f, (float)Math.Sin(angle * (Math.PI / 180.0)), (float)Math.Cos(angle * (Math.PI / 180.0)), 0f };
-            float[] md = { 0f, 0f, 0f, 1f };                                               // Create an X-rotation matrix
-            rotationMatrix.matrix[0] = ma;
-            rotationMatrix.matrix[1] = mb;
-            rotationMatrix.matrix[2] = mc;
-            rotationMatrix.matrix[3] = md;
-
-            rotationMatrix.input = new float[] { localPosition.x, localPosition.y, localPosition.z, 1f };
-
-            float[] matrixOut = rotationMatrix.output;
-            localPosition = new Vector3(matrixOut[0], matrixOut[1], matrixOut[2]);
-
-            // Repeat this in Y and Z axes.
-
-            // Y...
-
-            angle = rotation.y;
-            ma = new float[] { (float)Math.Cos(angle * (Math.PI / 180.0)), 0f, (float)Math.Sin(angle * (Math.PI / 180.0)), 0f };
-            mb = new float[] { 0f, 1f, 0f, 0f };
-            mc = new float[] { (float)-Math.Sin(angle * (Math.PI / 180.0)), 0, (float)Math.Cos(angle * (Math.PI / 180.0)), 0f };
-            md = new float[] { 0f, 0f, 0f, 1f };
-            rotationMatrix.matrix[0] = ma;
-            rotationMatrix.matrix[1] = mb;
-            rotationMatrix.matrix[2] = mc;
-            rotationMatrix.matrix[3] = md;
-
-            rotationMatrix.input = new float[] { localPosition.x, localPosition.y, localPosition.z, 1f };
-
-            matrixOut = rotationMatrix.output;
-            localPosition = new Vector3(matrixOut[0], matrixOut[1], matrixOut[2]);
-
-            // And then Z.
-
-            angle = rotation.z;
-            ma = new float[] { (float)Math.Cos(angle * (Math.PI / 180.0)), (float)-Math.Sin(angle * (Math.PI / 180.0)), 0f, 0f };
-            mb = new float[] { (float)Math.Sin(angle * (Math.PI / 180.0)), (float)Math.Cos(angle * (Math.PI / 180.0)), 0f, 0f };
-            mc = new float[] { 0f, 0f, 1f, 0f };
-            md = new float[] { 0f, 0f, 0f, 1f };
-            rotationMatrix.matrix[0] = ma;
-            rotationMatrix.matrix[1] = mb;
-            rotationMatrix.matrix[2] = mc;
-            rotationMatrix.matrix[3] = md;
-
-            rotationMatrix.input = new float[] { localPosition.x, localPosition.y, localPosition.z, 1f };
-
-            matrixOut = rotationMatrix.output;
-            localPosition = new Vector3(matrixOut[0], matrixOut[1], matrixOut[2]);
-
-            return localPosition;
+            return new Vector3(matrixOut[0], matrixOut[1], matrixOut[2]);
         }
 
         public static float fov = 100;

@@ -7,3 +7,12 @@ c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Deb
 c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Debug\3D_Engine.exe
 c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Debug\3D_Engine.pdb
 c:\users\mlugg\documents\visual studio 2017\Projects\3D_Engine\3D_Engine\obj\Debug\_3D_Engine.Form1.resources
+D:\Git\3D_Engine\3D_Engine\3D_Engine\obj\Debug\3D_Engine.csprojResolveAssemblyReference.cache
+D:\Git\3D_Engine\3D_Engine\3D_Engine\obj\Debug\_3D_Engine.Form1.resources
+D:\Git\3D_Engine\3D_Engine\3D_Engine\obj\Debug\_3D_Engine.Properties.Resources.resources
+D:\Git\3D_Engine\3D_Engine\3D_Engine\obj\Debug\3D_Engine.csproj.GenerateResource.Cache
+D:\Git\3D_Engine\3D_Engine\3D_Engine\obj\Debug\3D_Engine.exe
+D:\Git\3D_Engine\3D_Engine\3D_Engine\obj\Debug\3D_Engine.pdb
+D:\Git\3D_Engine\3D_Engine\3D_Engine\bin\Debug\3D_Engine.exe.config
+D:\Git\3D_Engine\3D_Engine\3D_Engine\bin\Debug\3D_Engine.exe
+D:\Git\3D_Engine\3D_Engine\3D_Engine\bin\Debug\3D_Engine.pdb
