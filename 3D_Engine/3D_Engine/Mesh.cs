@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,16 @@ namespace _3D_Engine
 {
     class Mesh
     {
-        public Mesh()
+        public Mesh(string name)
         {
             faces = new Face[0];
             position = new Vector3(0, 0, 0);
             rotation = new Vector3(0, 0, 0);
+            this.name = name;
         }
 
         public Face[] faces;
-
+        public string name { get; private set; }
         public Vector3 position;
         public Vector3 rotation;
     }

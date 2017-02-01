@@ -47,7 +47,7 @@ namespace _3D_Engine
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            test = new Mesh();
+            /*test = new Mesh("cube");
             test.faces = new Face[] {
                 new Face(new Vector3(-1, 1, -1), new Vector3(1, 1, -1), new Vector3(-1, -1, -1)),
                 new Face(new Vector3(1, 1, -1), new Vector3(-1, -1, -1), new Vector3(1, -1, -1)),
@@ -63,6 +63,13 @@ namespace _3D_Engine
                 new Face(new Vector3(-1, -1, -1), new Vector3(-1, -1, -1), new Vector3(1, -1, 1))
             };
             test.position = new Vector3(0, 0, 3);
+            t = new Thread(new ThreadStart(rotateLoop));
+            t.Start();*/
+            loadThing();
+        }
+        private async Task loadThing()
+        {
+            test = (await Utility.LoadJSONFileAsync("D:\\monkey.babylon"))[0];
             t = new Thread(new ThreadStart(rotateLoop));
             t.Start();
         }

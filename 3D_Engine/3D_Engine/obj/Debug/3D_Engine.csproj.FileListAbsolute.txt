@@ -16,3 +16,5 @@ D:\Git\3D_Engine\3D_Engine\3D_Engine\obj\Debug\3D_Engine.pdb
 D:\Git\3D_Engine\3D_Engine\3D_Engine\bin\Debug\3D_Engine.exe.config
 D:\Git\3D_Engine\3D_Engine\3D_Engine\bin\Debug\3D_Engine.exe
 D:\Git\3D_Engine\3D_Engine\3D_Engine\bin\Debug\3D_Engine.pdb
+D:\Git\3D_Engine\3D_Engine\3D_Engine\bin\Debug\Newtonsoft.Json.dll
+D:\Git\3D_Engine\3D_Engine\3D_Engine\bin\Debug\Newtonsoft.Json.xml
