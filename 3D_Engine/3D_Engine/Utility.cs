@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,7 +30,7 @@ namespace _3D_Engine
             };
 
 
-             projectionMatrix.input = new float[]
+            projectionMatrix.input = new float[]
             {
                 point.x,
                 point.y,
@@ -86,8 +89,9 @@ namespace _3D_Engine
         public static float height = 100;
         public static float width = 100;
 
-        public static Graphics renderMeshToGraphics(Mesh m, Vector3 camPos, Vector3 camDir, Graphics g)
+        public static float renderMeshToGraphics(Mesh m, Vector3 camPos, Vector3 camDir, Graphics g)
         {
+            Stopwatch timer = Stopwatch.StartNew();
             Face[] _faces = new Face[m.faces.Length];
             int i = 0;
             foreach (Face f in m.faces)
@@ -113,27 +117,32 @@ namespace _3D_Engine
                 faces[i] = face;
                 i++;
             }
+            int w = (int)Math.Round(width);
+            int h = (int)Math.Round(height);
+            int[][] buffer = new int[w][];
+            for(int j = 0; j < buffer.Length; j++)
+            {
+                buffer[j] = new int[h];
+                for(int k = 0; k < h; k++)
+                {
+                    buffer[j][k] = 0;
+                }
+            }
 
             // Rotation applied around camera! Now simply drawing.
-
+            bmp.Dispose();
+            bmp = new DirectBitmap((int)Math.Round(width), (int)Math.Round(height));
             foreach (Face f in faces)
             {
-                float aThickness = (10 - magnitude(f.a)) - 5;
-                float bThickness = (10 - magnitude(f.b)) - 5;
-                float cThickness = (10 - magnitude(f.c)) - 5;
                 Vector2 a = mapPointTo2DFromCamera(f.a, fov, new Vector2(width, height));
                 Vector2 b = mapPointTo2DFromCamera(f.b, fov, new Vector2(width, height));
                 Vector2 c = mapPointTo2DFromCamera(f.c, fov, new Vector2(width, height));
 
                 try
                 {
-                    if (a != null && b != null) g.DrawLine(Pens.Black, a.x, a.y, b.x, b.y);
-                    if (a != null && c != null) g.DrawLine(Pens.Black, a.x, a.y, c.x, c.y);
-                    if (b != null && c != null) g.DrawLine(Pens.Black, b.x, b.y, c.x, c.y);
-                    /*
-                    if (a != null && b != null) drawLine(g, a, b, aThickness, bThickness);//(100 - f.a.z) / 30, (100 - f.b.z) / 30);
-                    if (a != null && c != null) drawLine(g, a, c, aThickness, cThickness);//(100 - f.a.z) / 30, (100 - f.c.z) / 30);
-                    if (b != null && c != null) drawLine(g, b, c, bThickness, cThickness);//(100 - f.b.z) / 30, (100 - f.c.z) / 30);*/
+                    if (a != null && b != null) drawLine(bmp, a, b);
+                    if (a != null && c != null) drawLine(bmp, a, c);
+                    if (b != null && c != null) drawLine(bmp, b, c);
                 }
                 catch (Exception e)
                 {
@@ -142,34 +151,63 @@ namespace _3D_Engine
             }
 
             // Done!
+            
+            g.Clear(Color.White);
 
-            return g;
+            g.DrawImage(bmp.Bitmap, new Point(0, 0));
+            timer.Stop();
+            float ms = timer.ElapsedMilliseconds;
+            float fps = 1000 / ms;
+            return fps;
         }
+        static DirectBitmap bmp = new DirectBitmap((int)Math.Round(width), (int)Math.Round(height));
 
-        private static void drawLine(Graphics g, Vector2 a, Vector2 b, float aWidth, float bWidth)
+        // Credit to some genius on the internet
+        public static void drawLine(DirectBitmap bmp, Vector2 a, Vector2 b)
         {
-            int diff = (int)aWidth - (int)bWidth;
-            if (diff < 0) diff = -diff;
-            diff /= 2;
-            float minWidth = aWidth > bWidth ? bWidth : aWidth;
-            for(int i = 0; i <= diff; i++)
+            if (a.x >= width | a.x < 0 | b.x >= width | b.x < 0 | a.y >= height | a.y < 0 | b.y >= height | b.y < 0) return;
+            try
             {
-                Vector2 v = b - a;
-                float xEach = v.x;
-                float yEach = v.y;
-                if (diff != 0)
+                int x = (int)Math.Round(a.x);
+                int y = (int)Math.Round(a.y);
+                int x2 = (int)Math.Round(b.x);
+                int y2 = (int)Math.Round(b.y);
+                int w = x2 - x;
+                int h = y2 - y;
+                int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
+                if (w < 0) dx1 = -1; else if (w > 0) dx1 = 1;
+                if (h < 0) dy1 = -1; else if (h > 0) dy1 = 1;
+                if (w < 0) dx2 = -1; else if (w > 0) dx2 = 1;
+                int longest = Math.Abs(w);
+                int shortest = Math.Abs(h);
+                if (!(longest > shortest))
                 {
-                    xEach = v.x / diff;
-                    
-                    yEach = v.y / diff;
-                    
+                    longest = Math.Abs(h);
+                    shortest = Math.Abs(w);
+                    if (h < 0) dy2 = -1; else if (h > 0) dy2 = 1;
+                    dx2 = 0;
                 }
-                Pen p = new Pen(Color.Black, minWidth + (2 * i));
-                Pen pen = new Pen(new SolidBrush(Color.Blue));
-                pen.EndCap = System.Drawing.Drawing2D.LineCap.Flat;
-                pen.StartCap = System.Drawing.Drawing2D.LineCap.Flat;
-                pen.Width = minWidth + (2 * i);
-                g.DrawLine(pen, a.x + (xEach * i), a.y + (yEach * i), a.x + xEach + (xEach * i), a.y + yEach + (yEach * i));
+                int numerator = longest >> 1;
+                for (int i = 0; i <= longest; i++)
+                {
+                    if (bmp.Width > x && bmp.Height > y) bmp.Bits[x + (y * bmp.Width)] = Color.Black.ToArgb();
+                    else return;
+                    numerator += shortest;
+                    if (!(numerator < longest))
+                    {
+                        numerator -= longest;
+                        x += dx1;
+                        y += dy1;
+                    }
+                    else
+                    {
+                        x += dx2;
+                        y += dy2;
+                    }
+                }
+            }
+            catch
+            {
             }
         }
 
@@ -251,6 +289,34 @@ namespace _3D_Engine
                 meshes.Add(mesh);
             }
             return meshes.ToArray();
+        }
+    }
+
+    public class DirectBitmap : IDisposable
+    {
+        public Bitmap Bitmap { get; private set; }
+        public Int32[] Bits { get; private set; }
+        public bool Disposed { get; private set; }
+        public int Height { get; private set; }
+        public int Width { get; private set; }
+
+        protected GCHandle BitsHandle { get; private set; }
+
+        public DirectBitmap(int width, int height)
+        {
+            Width = width;
+            Height = height;
+            Bits = new Int32[width * height];
+            BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
+            Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
+        }
+
+        public void Dispose()
+        {
+            if (Disposed) return;
+            Disposed = true;
+            Bitmap.Dispose();
+            BitsHandle.Free();
         }
     }
 }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,8 +22,10 @@ namespace _3D_Engine
         Mesh test;
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = this.CreateGraphics();
-            Utility.renderMeshToGraphics(test, camPos, camDir, g);
+            Graphics g = e.Graphics;
+            
+            int fps = (int)Math.Round(Utility.renderMeshToGraphics(test, camPos, camDir, g));
+            label1.Invoke((MethodInvoker)(() => label1.Text = "FPS: " + fps));
         }
         Vector3 camPos = new Vector3(0, 0, 0);
         Vector3 camDir = new Vector3(0, 0, 0);
@@ -35,11 +39,12 @@ namespace _3D_Engine
                 Thread.Sleep(50);
                 try
                 {
-                    this.CreateGraphics().Clear(Color.White);
+                    //this.CreateGraphics().Clear(Color.White);
                     this.InvokePaint(this, new PaintEventArgs(this.CreateGraphics(), new Rectangle()));
                 }
                 catch(Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     t.Abort();
                 }
             }
@@ -119,4 +124,6 @@ namespace _3D_Engine
             Utility.height = (float)numericUpDown9.Value;
         }
     }
+
+    
 }
